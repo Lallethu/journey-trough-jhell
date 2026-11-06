@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "workspace.library": ["meta"],
+  "workspace.checkThirdParty": false,
+  "completion.callSnippet": "Replace",
+  "hint.enable": true,
+  "hint.paramName": "Literal",
+  "hint.paramType": true,
+  "hint.setType": false,
+  "diagnostics.unusedLocalExclude": ["_*"],
+  "diagnostics.severity": {
+    "lowercase-global": "Error"
+  },
+  "diagnostics.groupSeverity": {
+    "strong": "Warning"
+  }
+}

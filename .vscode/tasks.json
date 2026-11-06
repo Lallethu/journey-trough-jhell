@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run game",
+      "type": "shell",
+      "command": "love",
+      "args": ["."],
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Package .love",
+      "type": "shell",
+      "command": "mkdir -p build && zip -9 -r build/journey-trough-jhell.love main.lua conf.lua src lib assets -x '*.DS_Store'",
+      "windows": {
+        "command": "powershell -NoProfile -Command \"New-Item -ItemType Directory -Force build | Out-Null; Compress-Archive -Force -Path main.lua,conf.lua,src,lib,assets -DestinationPath build/journey-trough-jhell.zip; Move-Item -Force build/journey-trough-jhell.zip build/journey-trough-jhell.love\""
+      },
+      "problemMatcher": []
+    }
+  ]
+}

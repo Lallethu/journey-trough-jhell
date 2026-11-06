@@ -1,0 +1,23 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.rulers": [100],
+  "editor.renderWhitespace": "trailing",
+
+  "[lua]": {
+    "editor.defaultFormatter": "sumneko.lua",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
+  },
+
+  "files.exclude": {
+    "build": true
+  },
+  "search.exclude": {
+    "build": true,
+    "lib": true
+  }
+}
