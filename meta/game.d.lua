@@ -52,3 +52,45 @@ function Screen.finish() end
 ---@param y number
 ---@return number x , number y
 function Screen.toGameCoordinates(x, y) return x, y end
+
+---@class State
+local State = {}
+
+---Trigger when StateManager:switch is called
+---@param ... unknown
+function State:enter(...) end
+
+---Trigger when StateManager:switch is called
+function State:exit() end
+
+---Updates the state
+---@param dt number
+function State:update(dt) end
+
+---Draws the state
+function State:draw() end
+
+---@alias StateList table<string, State>
+
+---@class StateMachine
+---@field states StateList
+---@field current State
+---@field name string The key string as index
+local StateMachine = {}
+
+---Creates a new StateMachine instance and feed states to its states list
+---@param states StateList
+---@return StateMachine
+function StateMachine.new(states) return StateMachine end
+
+---Tries to switch to the specified scene if present in the states list
+---@param name string
+---@param ... unknown
+function StateMachine:switch(name, ...) end
+
+---Updates the current state if update is implemented
+---@param dt number
+function StateMachine:update(dt) end
+
+---Draws the current state if draw is implemented
+function StateMachine:draw() end
