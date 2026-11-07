@@ -1,18 +1,25 @@
 local Screen = require("src.core.screen")
 local Input = require("src.core.input")
 local StateMachine = require("src.core.statemachine")
+local Player = require("src.world.player")
+local World = require("src.world.world")
 
 ---@class Game
 local Game = {}
 
 ---@type StateMachine
 local stateMachine
+---@type World
+local world
 
 function Game.load()
   Screen.init()
+  world = World.new()
+  world.player = world:add(Player.new(50, 50))
 
   local dayState = require("src.states.day")
   local nightState = require("src.states.night")
+  dayState.world, nightState.world = world, world
 
   stateMachine = StateMachine.new { day = dayState, night = nightState }
   stateMachine:switch("day")
