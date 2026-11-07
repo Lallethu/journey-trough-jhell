@@ -1,4 +1,4 @@
----@type table<Binding, love.Scancode[]>
+---@type Bindings
 local bindings = {
   move_left          = { "a", "q", "left" },
   move_right         = { "d", "right" },

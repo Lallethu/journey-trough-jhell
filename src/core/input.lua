@@ -1,7 +1,7 @@
 local bindings = require("src.data.bindings")
 local unpack = table.unpack or unpack
 
----@type Input
+---@class Input
 local Input = {}
 
 ---@type table<love.Scancode, Binding>
@@ -15,10 +15,15 @@ for action, scancodes in pairs(bindings) do
   end
 end
 
+---Checks if a key is held this frame
+---@param binding Binding
+---@return boolean isActive Whether or not the keyboard input is held down
 function Input.isDown(binding)
   return love.keyboard.isScancodeDown(unpack(bindings[binding]) --[[@as love.Scancode]])
 end
 
+---Returns the normalized axis from the movement input
+---@return number x, number y
 function Input.axis()
   local x = (Input.isDown("move_right") and 1 or 0)
       - (Input.isDown("move_left") and 1 or 0)
@@ -36,7 +41,7 @@ function Input.axis()
   return x, y
 end
 
----comment
+---Checks if a key has been pressed last frame
 ---@param _ any
 ---@param scancode love.Scancode
 ---@return Binding?
