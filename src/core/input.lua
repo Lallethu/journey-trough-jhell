@@ -16,7 +16,7 @@ for action, scancodes in pairs(bindings) do
 end
 
 function Input.isDown(binding)
-  return love.keyboard.isScancodeDown(unpack(bindings[binding]))
+  return love.keyboard.isScancodeDown(unpack(bindings[binding]) --[[@as love.Scancode]])
 end
 
 function Input.axis()
