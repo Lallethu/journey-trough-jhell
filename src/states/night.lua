@@ -9,9 +9,13 @@ function NightState:exit()
   print("exited night state")
 end
 
-function NightState:update(dt) end
+function NightState:update(dt)
+  self.world:update(dt)
+end
 
-function NightState:draw() end
+function NightState:draw()
+  self.world:draw()
+end
 
 function NightState:onAction(action)
   -- TODO: remove that later
