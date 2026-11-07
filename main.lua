@@ -1,11 +1,15 @@
+---@type love
 local love = require("love")
 
-function love.load() end
+---@type Game
+local Game = require("src.game")
 
-function love.update(dt) end
+function love.load() Game.load() end
 
-function love.draw() end
+function love.update(dt) Game.update(dt) end
 
-function love.keypressed(k, sc) end
+function love.draw() Game.draw() end
 
-function love.resize(w, h) end
+function love.keypressed(k, sc) Game.keypressed(k, sc) end
+
+function love.resize(w, h) Game.resize(w, h) end
