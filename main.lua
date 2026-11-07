@@ -6,4 +6,6 @@ function love.update(dt) end
 
 function love.draw() end
 
-function love.keypressed(key, scancode) end
+function love.keypressed(k, sc) end
+
+function love.resize(w, h) end
