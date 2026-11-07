@@ -1,4 +1,3 @@
----@type love
 local love = require("love")
 
 ---@type Game
