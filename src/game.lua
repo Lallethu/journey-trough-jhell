@@ -14,11 +14,13 @@ local world
 
 function Game.load()
   Screen.init()
+
   world = World.new()
   world.player = world:add(Player.new(50, 50))
 
   local dayState = require("src.states.day")
   local nightState = require("src.states.night")
+
   dayState.world, nightState.world = world, world
 
   stateMachine = StateMachine.new { day = dayState, night = nightState }
@@ -26,6 +28,7 @@ function Game.load()
 end
 
 function Game.update(dt)
+  dt = math.min(dt, 1 / 20) -- cheeky way of capping dt compounding to insane values and break movement/timer/ect...
   stateMachine:update(dt)
 end
 
