@@ -4,7 +4,7 @@ local unpack = table.unpack or unpack
 ---@type Input
 local Input = {}
 
----@type table<love.keyboard.Scancode, Binding>
+---@type table<love.Scancode, Binding>
 local actionByScancode = {}
 
 for action, scancodes in pairs(bindings) do
@@ -38,7 +38,7 @@ end
 
 ---comment
 ---@param _ any
----@param scancode love.keyboard.Scancode
+---@param scancode love.Scancode
 ---@return Binding?
 function Input.keypressed(_, scancode)
   return actionByScancode[scancode]
