@@ -18,11 +18,11 @@ function Game.load()
   world = World.new()
   world.player = world:add(Player.new(50, 50))
 
-  local dayState = require("src.states.day")
-  local nightState = require("src.states.night")
-
   stateMachine = StateMachine.new {
-    states = { day = dayState, night = nightState },
+    states = {
+      day   = require("src.states.day"),
+      night = require("src.states.night")
+    },
     world = world
   }
 
