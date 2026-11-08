@@ -21,9 +21,11 @@ function Game.load()
   local dayState = require("src.states.day")
   local nightState = require("src.states.night")
 
-  dayState.world, nightState.world = world, world
+  stateMachine = StateMachine.new {
+    states = { day = dayState, night = nightState },
+    world = world
+  }
 
-  stateMachine = StateMachine.new { day = dayState, night = nightState }
   stateMachine:switch("day")
 end
 

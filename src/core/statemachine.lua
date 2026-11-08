@@ -6,11 +6,14 @@ local StateMachine = {}
 StateMachine.__index = StateMachine
 
 ---Creates a new StateMachine instance and feed states to its states list
----@param states StateList
+---@param ctx table<"states"|"world", State[]|World>
 ---@return StateMachine
-function StateMachine.new(states)
-  local instance = { states = states }
-  for _, state in pairs(instance.states) do state.machine = instance end
+function StateMachine.new(ctx)
+  local instance = { states = ctx.states }
+  for _, state in pairs(instance.states) do
+    state.machine = instance
+    state.world = ctx.world
+  end
   return setmetatable(instance, StateMachine)
 end
 
