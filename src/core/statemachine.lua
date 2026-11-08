@@ -6,15 +6,17 @@ local StateMachine = {}
 StateMachine.__index = StateMachine
 
 ---Creates a new StateMachine instance and feed states to its states list
----@param ctx table<"states"|"world", State[]|World>
+---@param ctx StateContext
 ---@return StateMachine
 function StateMachine.new(ctx)
-  local instance = { states = ctx.states }
+  assert(ctx.states, "StateMachine.new: ctx.states is required")
+  assert(ctx.world, "StateMachine.new: ctx.world is required")
+  local instance = setmetatable({ states = ctx.states }, StateMachine)
   for _, state in pairs(instance.states) do
     state.machine = instance
     state.world = ctx.world
   end
-  return setmetatable(instance, StateMachine)
+  return instance
 end
 
 ---Tries to switch to the specified scene if present in the states list

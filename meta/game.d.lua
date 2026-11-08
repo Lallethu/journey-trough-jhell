@@ -23,6 +23,10 @@
 
 ---@alias StateList table<string, State>
 
+---@class StateContext
+---@field states StateList
+---@field world World
+
 ---@class Entity
 ---@field id integer
 ---@field x number Centre of the entity
