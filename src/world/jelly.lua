@@ -1,5 +1,6 @@
 local playerdata = require("src.data.player")
 local Hittable   = require("src.core.hittable")
+local Events     = require("src.core.events")
 
 local jellydata  = require("src.data.jelly")
 
@@ -22,6 +23,7 @@ function Jelly.new(world, x, y, size)
     -- entity
     x = x,
     y = y,
+    kind = "jelly",
     dead = false,
     -- jelly
     world = world,
@@ -33,15 +35,22 @@ function Jelly.new(world, x, y, size)
     hp = size * 2,
     hitTimer = 0,
     hitDuration = jellydata.HIT_DURATION,
-    takeHit = Hittable.takeHit,
   }, Jelly)
+end
+
+function Jelly:takeHit(damage)
+  local accepted = Hittable.takeHit(self, damage)
+  if accepted and self.dead then
+    Events.emit("jelly_died", self)
+  end
+  return accepted
 end
 
 ---@param dt number
 function Jelly:update(dt)
   local target = self.world.player
-  if not target or target.dead then return end
   Hittable.tick(self, dt)
+  if not target or target.dead then return end
 
   local dx, dy = target.x - self.x, target.y - self.y
   local d2 = dx * dx + dy * dy
