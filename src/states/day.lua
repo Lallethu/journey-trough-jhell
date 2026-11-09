@@ -1,3 +1,5 @@
+local Profiler = require("src.core.profiler")
+
 ---@type State
 local DayState = {}
 
@@ -20,6 +22,9 @@ end
 function DayState:onAction(action)
   -- TODO: remove that later
   if action == "debug_switch_state" then self.machine:switch("night") end
+  -- TODO: remove that later
+  if action == "debug_profiler" then Profiler.toggle() end
+  if action == "debug_reset_profiler" then Profiler.reset() end
 end
 
 return DayState
