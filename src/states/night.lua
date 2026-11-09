@@ -6,6 +6,8 @@ local Jelly = require("src.world.jelly")
 local Events = require("src.core.events")
 ---@type PlayerCommands
 local PlayerCommands = require("src.commands.player")
+---@type WaveSpawner
+local WaveSpawner = require("src.systems.wave_spawner")
 local Profiler = require("src.core.profiler")
 
 local keymap = { attack = PlayerCommands.attack }
@@ -14,31 +16,21 @@ local keymap = { attack = PlayerCommands.attack }
 local NightState = {}
 
 function NightState:enter()
-  print("entered night state")
-  -- TODO: remove that when a proper spawner system is made
-  for i = 1, 5 do
-    self.world:add(
-      Jelly.new(
-        self.world,
-        math.random(0, Screen.width),
-        math.random(0, Screen.height),
-        math.random(1, 3)))
-  end
-  Events.on("jelly_died",
-    function(jelly)
-
-    end,
-    self
-  )
+  WaveSpawner.start(self.world, self.world.night)
+  Events.on("wave_cleared", function()
+    self.world.night = self.world.night + 1
+    self.machine:switch("day")
+  end, self)
 end
 
 function NightState:exit()
+  WaveSpawner.stop()
   Events.off_owner(self)
-  print("exited night state")
 end
 
 function NightState:update(dt)
   self.world:update(dt)
+  WaveSpawner.update(dt)
 end
 
 function NightState:draw()
