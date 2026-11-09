@@ -104,6 +104,7 @@ function Profiler.endSection(name)
   sections[entry.name] = section
 end
 
+-- TODO: might remove this, I don't plan to use it?
 function Profiler.gcStep(size)
   local start = love.timer.getTime()
   local result = collectgarbage("step", size or 1)
