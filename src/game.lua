@@ -19,7 +19,7 @@ function Game.load()
 
   world = World.new()
   world.player = world:add(Player.new(50, 50)) --[[@as Hittable]]
-  SplittingSystem.init { world = world }
+  SplittingSystem.init(world)
 
   stateMachine = StateMachine.new {
     states = {

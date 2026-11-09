@@ -3,6 +3,7 @@
 ---@field pending Entity[]
 ---@field player Hittable
 ---@field nextId integer
+---@field night integer
 local World = {}
 World.__index = World
 
@@ -23,6 +24,7 @@ function World.new()
     pending = {},
     player = nil,
     nextId = 1,
+    night = 1,
   }, World)
 end
 
@@ -67,6 +69,21 @@ function World:queryCircle(x, y, r, kind)
     end
   end
   return found
+end
+
+---@param kind EntityKind
+---@return integer
+function World:count(kind)
+  local n = 0
+  for i = 1, #self.entities do
+    local e = self.entities[i]
+    if e.kind == kind and not e.dead then n = n + 1 end
+  end
+  for i = 1, #self.pending do
+    local e = self.pending[i]
+    if e.kind == kind and not e.dead then n = n + 1 end
+  end
+  return n
 end
 
 ---@param dt number
