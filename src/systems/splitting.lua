@@ -32,9 +32,9 @@ local function onJellyDied(parent)
   end
 end
 
----@param ctx { world: World }
-function SplittingSystem.init(ctx)
-  world = ctx.world
+---@param p_world World
+function SplittingSystem.init(p_world)
+  world = p_world
   -- unhook the event in case caller is called for a restart
   -- like so if "world" is reset too, the reference does not point to nil
   -- TODO: make the restart logic in src/game.lua
