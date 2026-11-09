@@ -3,6 +3,7 @@ local Input = require("src.core.input")
 local StateMachine = require("src.core.statemachine")
 local Player = require("src.world.player")
 local World = require("src.world.world")
+local SplittingSystem = require("src.systems.splitting")
 local Profiler = require("src.core.profiler")
 
 ---@class Game
@@ -18,6 +19,7 @@ function Game.load()
 
   world = World.new()
   world.player = world:add(Player.new(50, 50)) --[[@as Hittable]]
+  SplittingSystem.init { world = world }
 
   stateMachine = StateMachine.new {
     states = {
