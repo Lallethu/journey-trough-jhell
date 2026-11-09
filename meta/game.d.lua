@@ -9,6 +9,9 @@
 ---| "move_down"
 ---| "interact"
 ---| "attack"
+---| "debug_switch_state"
+---| "debug_profiler"
+---| "debug_reset_profiler"
 
 ---@alias Bindings table<Binding, love.Scancode[]>
 
