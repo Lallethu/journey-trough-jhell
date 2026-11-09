@@ -8,6 +8,9 @@ local playerdata = require("src.data.player")
 ---@class Player : Hittable
 ---@field vx number
 ---@field vy number
+---@field facingX number
+---@field facingY number
+---@field attackTimer number
 local Player = {}
 Player.__index = Player
 
@@ -19,12 +22,16 @@ function Player.new(x, y)
     -- entity
     x = x,
     y = y,
+    kind = "player",
     dead = false,
     -- player
     vx = 0,
     vy = 0,
+    facingX = 0,
+    facingY = 1,
+    attackTimer = 0,
     -- hittable
-    hp = 100,
+    hp = playerdata.BASE_HP,
     hitTimer = 0,
     hitDuration = playerdata.HIT_DURATION,
     takeHit = Hittable.takeHit,
@@ -34,7 +41,11 @@ end
 ---@param dt number
 function Player:update(dt)
   local ax, ay = Input.axis()
+  if ax ~= 0 or ay ~= 0 then
+    self.facingX, self.facingY = ax, ay
+  end
   Hittable.tick(self, dt)
+  self.attackTimer = math.max(0, self.attackTimer - dt)
 
   local rate = (ax ~= 0 or ay ~= 0) and playerdata.ACCELERATION or playerdata.FRICTION
   local weight = math.min(1, rate * dt)
@@ -56,6 +67,11 @@ function Player:draw()
     playerdata.SIZE,
     playerdata.SIZE
   )
+
+  if self.attackTimer > 0 then
+    love.graphics.circle("line", self.x + self.facingX * playerdata.ATTACK_REACH,
+      self.y + self.facingY * playerdata.ATTACK_REACH, playerdata.ATTACK_RADIUS)
+  end
 
   love.graphics.setColor(1, 1, 1, 1)
 end
