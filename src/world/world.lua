@@ -1,7 +1,7 @@
 ---@class World
 ---@field entities Entity[]
 ---@field pending Entity[]
----@field player Entity?
+---@field player Hittable
 ---@field nextId integer
 local World = {}
 World.__index = World
@@ -28,7 +28,7 @@ end
 
 ---Queues an entity. It joins the world at the end of the current update.
 ---@param entity Entity
----@return Entity
+---@return Entity|Hittable
 function World:add(entity)
   entity.id = self.nextId
   self.nextId = self.nextId + 1
