@@ -13,7 +13,29 @@
 ---| "debug_profiler"
 ---| "debug_reset_profiler"
 
+---@alias GameEvent
+---| "jelly_died"
+---| "player_attacked"
+---| "jelly_spawned"
+---| "task_done"
+---| "phase_changed"
+---| "wave_cleared"
+---| "structure_built"
+
+---@alias EntityKind
+---| "player"
+---| "jelly"
+---| "wall"
+---| "npc"
+
 ---@alias Bindings table<Binding, love.Scancode[]>
+
+---@alias EventHandler fun(...: any)
+
+---@class Listener
+---@field fn EventHandler
+---@field owner table?
+local listeners = {}
 
 ---@class State
 ---@field machine StateMachine? reference to the statemachine
@@ -34,6 +56,7 @@
 ---@field id integer
 ---@field x number Centre of the entity
 ---@field y number Centre of the entity
+---@field kind EntityKind
 ---@field dead boolean
 ---@field update fun(self: Entity, dt: number)
 ---@field draw fun(self: Entity)
