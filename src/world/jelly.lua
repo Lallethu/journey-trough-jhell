@@ -44,10 +44,10 @@ function Jelly:update(dt)
   Hittable.tick(self, dt)
 
   local dx, dy = target.x - self.x, target.y - self.y
-  local dist = math.sqrt(dx * dx + dy * dy)
-
-  if dx * dx + dy * dy < (self.radius + playerdata.HALF) * (self.radius + playerdata.HALF) then
-    self.world.player:takeHit(self.damage)
+  local d2 = dx * dx + dy * dy
+  local dist = math.sqrt(d2)
+  if d2 < (self.radius + playerdata.HURT_RADIUS) * (self.radius + playerdata.HURT_RADIUS) then
+    target:takeHit(self.damage)
   end
 
   if dist < jellydata.MIN_DISTANCE then return end
