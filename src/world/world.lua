@@ -49,6 +49,26 @@ function World:sweepDead()
   end
 end
 
+---@param x number
+---@param y number
+---@param r number
+---@param kind EntityKind
+---@return Entity[]
+function World:queryCircle(x, y, r, kind)
+  local found = {}
+  for i = 1, #self.entities do
+    local e = self.entities[i] --[[@as Jelly]]
+    if e.kind == kind and not e.dead then
+      local dx, dy = e.x - x, e.y - y
+      local reach = r + e.radius
+      if dx * dx + dy * dy <= reach * reach then
+        found[#found + 1] = e
+      end
+    end
+  end
+  return found
+end
+
 ---@param dt number
 function World:update(dt)
   for i = 1, #self.entities do
