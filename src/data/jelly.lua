@@ -10,6 +10,11 @@ local jellydata = {
     [1] = 1.00,
     [2] = 1.25,
     [3] = 1.65,
+  },
+  SPLIT_PER_SIZE      = {
+    [1] = { dead = true },
+    [2] = { size = 1, split = 2 },
+    [3] = { size = 2, split = 2 }
   }
 }
 
