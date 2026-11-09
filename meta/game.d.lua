@@ -9,6 +9,9 @@
 ---| "move_down"
 ---| "interact"
 ---| "attack"
+---| "debug_switch_state"
+---| "debug_profiler"
+---| "debug_reset_profiler"
 
 ---@alias Bindings table<Binding, love.Scancode[]>
 
@@ -22,6 +25,10 @@
 ---@field onAction fun(self: State, action: Binding)?
 
 ---@alias StateList table<string, State>
+
+---@class StateContext
+---@field states StateList
+---@field world World
 
 ---@class Entity
 ---@field id integer
