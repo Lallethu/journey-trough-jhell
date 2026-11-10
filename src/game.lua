@@ -34,6 +34,7 @@ function Game.load()
   stateMachine = StateMachine.new {
     states = {
       day   = require("src.states.day"),
+      dusk  = require("src.states.dusk"),
       night = require("src.states.night")
     },
     world = world
