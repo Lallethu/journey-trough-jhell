@@ -2,6 +2,8 @@
 local Commands    = require("src.commands.player")
 ---@type Events
 local Events      = require("src.core.events")
+---@type FX
+local FX          = require("src.systems.fx")
 ---@type HUD
 local HUD         = require("src.ui.hud")
 ---@type Screen
@@ -12,7 +14,7 @@ local Profiler    = require("src.core.profiler")
 
 local palettes    = require("src.data.palettes")
 
-local keymap      = { attack = Commands.attack }
+local keymap      = { attack = Commands.attack, heal = Commands.heal }
 
 ---@type State
 local NightState  = {}
@@ -32,12 +34,14 @@ end
 
 function NightState:update(dt)
   self.world:update(dt)
+  FX.update(dt)
   WaveSpawner.update(dt)
 end
 
 function NightState:draw()
   Screen.fill(palettes.NIGHT)
   self.world:draw()
+  FX.draw()
   HUD.drawNight(self.world)
 end
 
