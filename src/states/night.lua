@@ -1,19 +1,21 @@
 ---@type Screen
-local Screen = require("src.core.screen")
+local Screen      = require("src.core.screen")
 ---@type Jelly
-local Jelly = require("src.world.jelly")
+local Jelly       = require("src.world.jelly")
 ---@type Events
-local Events = require("src.core.events")
+local Events      = require("src.core.events")
 ---@type Commands
-local Commands = require("src.commands.player")
+local Commands    = require("src.commands.player")
 ---@type WaveSpawner
 local WaveSpawner = require("src.systems.wave_spawner")
-local Profiler = require("src.core.profiler")
+---@type HUD
+local HUD         = require("src.ui.hud")
+local Profiler    = require("src.core.profiler")
 
-local keymap = { attack = Commands.attack }
+local keymap      = { attack = Commands.attack }
 
 ---@type State
-local NightState = {}
+local NightState  = {}
 
 function NightState:enter()
   WaveSpawner.start(self.world, self.world.night)
@@ -35,6 +37,7 @@ end
 
 function NightState:draw()
   self.world:draw()
+  HUD.drawNight(self.world)
 end
 
 function NightState:onAction(action)

@@ -1,16 +1,17 @@
-local Screen = require("src.core.screen")
-local Input = require("src.core.input")
-local StateMachine = require("src.core.statemachine")
-local Player = require("src.world.player")
-local World = require("src.world.world")
+local Screen          = require("src.core.screen")
+local Input           = require("src.core.input")
+local StateMachine    = require("src.core.statemachine")
+local Player          = require("src.world.player")
+local World           = require("src.world.world")
 local ResourcesSystem = require("src.systems.resources")
 local SplittingSystem = require("src.systems.splitting")
-local Interactable = require("src.world.interactable")
-local Events = require("src.core.events")
-local Profiler = require("src.core.profiler")
+local Interactable    = require("src.world.interactable")
+local Events          = require("src.core.events")
+local HUD             = require("src.ui.hud")
+local Profiler        = require("src.core.profiler")
 
 ---@class Game
-local Game = {}
+local Game            = {}
 
 ---@type StateMachine
 local stateMachine
@@ -19,6 +20,7 @@ local world
 
 function Game.load()
   Screen.init()
+  HUD.init()
 
   world = World.new()
   world.player = world:add(Player.new(Screen.width / 2, Screen.height / 2)) --[[@as Hittable]]

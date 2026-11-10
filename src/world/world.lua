@@ -99,6 +99,22 @@ function World:count(kind)
   return n
 end
 
+---@param x number
+---@param y number
+---@param r number
+---@param kind EntityKind
+---@return Entity?
+function World:nearest(x, y, r, kind)
+  local best, bestD2
+  local list = self:queryCircle(x, y, r, kind)
+  for i = 1, #list do
+    local dx, dy = list[i].x - x, list[i].y - y
+    local d2 = dx * dx + dy * dy
+    if not bestD2 or d2 < bestD2 then best, bestD2 = list[i], d2 end
+  end
+  return best
+end
+
 ---@param dt number
 function World:update(dt)
   for i = 1, #self.entities do

@@ -1,8 +1,10 @@
 ---@type Commands
 local Commands = require("src.commands.player")
+---@type HUD
+local HUD      = require("src.ui.hud")
 local Profiler = require("src.core.profiler")
 
-local keymap = { interact = Commands.interact }
+local keymap   = { interact = Commands.interact }
 
 ---@type State
 local DayState = {}
@@ -15,9 +17,7 @@ function DayState:enter()
     end)
 end
 
-function DayState:exit()
-  print("exited day state")
-end
+function DayState:exit() end
 
 function DayState:update(dt)
   self.world:update(dt)
@@ -25,6 +25,7 @@ end
 
 function DayState:draw()
   self.world:draw()
+  HUD.drawDay(self.world)
 end
 
 function DayState:onAction(action)
