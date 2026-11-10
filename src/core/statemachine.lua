@@ -45,4 +45,14 @@ function StateMachine:onAction(action)
   if self.current and self.current.onAction then self.current:onAction(action) end
 end
 
+---Process mousepress actions
+---@param x number
+---@param y number
+---@param button integer
+function StateMachine:mousepressed(x, y, button)
+  if self.current and self.current.mousepressed then
+    self.current:mousepressed(x, y, button)
+  end
+end
+
 return StateMachine
