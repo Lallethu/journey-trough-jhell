@@ -1,36 +1,50 @@
+---@type Screen
+local Screen     = require("src.core.screen")
+local Util       = require("src.core.util")
 ---@type Commands
-local Commands = require("src.commands.player")
+local Commands   = require("src.commands.player")
+---@type Events
+local Events     = require("src.core.events")
 ---@type HUD
-local HUD      = require("src.ui.hud")
-local Profiler = require("src.core.profiler")
+local HUD        = require("src.ui.hud")
+local Profiler   = require("src.core.profiler")
 
-local keymap   = { interact = Commands.interact }
+local daytimings = require("src.data.day_timings")
+local palettes   = require("src.data.palettes")
+
+local keymap     = { interact = Commands.interact }
+local sky        = { 1, 1, 1, 1 }
 
 ---@type State
-local DayState = {}
+local DayState   = {}
 
 function DayState:enter()
+  self.timeLeft = daytimings.DAY_LENGTH
   self.world:eachOfKind("interactable",
     ---@param e Interactable
     function(e)
       e:refresh()
     end)
+  Events.emit("phase_changed", "day")
 end
 
 function DayState:exit() end
 
 function DayState:update(dt)
   self.world:update(dt)
+  self.timeLeft = math.max(self.timeLeft - dt, 0)
+  if self.timeLeft <= 0 then self.machine:switch("dusk") end
 end
 
 function DayState:draw()
+  local k = Util.clamp(1 - self.timeLeft / daytimings.WARNING_TIME, 0, 1)
+  Screen.fill(Util.mixColor(palettes.DAY, palettes.DUSK, k, sky))
   self.world:draw()
-  HUD.drawDay(self.world)
+  HUD.drawDay(self.world, self.timeLeft)
 end
 
 function DayState:onAction(action)
-  -- TODO: remove that later
-  if action == "debug_switch_state" then self.machine:switch("night") end
+  if action == "end_day" then self.machine:switch("dusk") end
   -- TODO: remove that later
   if action == "debug_profiler" then Profiler.toggle() end
   if action == "debug_reset_profiler" then Profiler.reset() end
