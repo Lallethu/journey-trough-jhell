@@ -32,7 +32,7 @@ function DayState:exit() end
 
 function DayState:update(dt)
   self.world:update(dt)
-  self.timeLeft = math.max(self.timeLeft - dt, 0)
+  self.timeLeft = self.timeLeft - dt
   if self.timeLeft <= 0 then self.machine:switch("dusk") end
 end
 
