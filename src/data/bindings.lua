@@ -8,7 +8,7 @@ local bindings = {
   attack               = { "space" },
   interact             = { "e" },
   -- place_wall           = { "q" }, -- preshot
-  -- heal                 = { "f" }, -- preshot
+  heal                 = { "f" },
   cancel               = { "x" },
   end_day              = { "return" },
 
