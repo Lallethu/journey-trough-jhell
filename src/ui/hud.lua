@@ -1,5 +1,6 @@
 local Util                        = require("src.core.util")
 local Screen                      = require("src.core.screen")
+
 local bindings                    = require("src.data.bindings")
 local tasksdata                   = require("src.data.tasks")
 local wavesdata                   = require("src.data.waves")
@@ -116,7 +117,8 @@ function HUD.init()
 end
 
 ---@param world World
-function HUD.drawDay(world)
+---@param timeLeft number
+function HUD.drawDay(world, timeLeft)
   love.graphics.push("all")
   love.graphics.setFont(font)
   status(world)
