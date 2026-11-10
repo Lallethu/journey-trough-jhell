@@ -19,7 +19,9 @@
 ---| "player_attacked"
 ---| "jelly_spawned"
 ---| "task_done"
+---| "task_failed"
 ---| "task_refused"
+---| "task_target_hit"
 ---| "phase_changed"
 ---| "wave_cleared"
 ---| "structure_built"
@@ -49,12 +51,15 @@ local listeners = {}
 ---@class State
 ---@field machine StateMachine? reference to the statemachine
 ---@field world World? reference to the world
+---@field activeTask Task?
 ---@field timeLeft number? Time between transitions
 ---@field enter fun(self: State, ...: any)? Trigger when StateMachine:switch is called
 ---@field exit fun(self: State)? Trigger when StateMachine:switch is called
 ---@field update fun(self: State, dt: number)?
 ---@field draw fun(self: State)?
+---@field startTask fun(self: State, target: Interactable)?
 ---@field onAction fun(self: State, action: Binding)?
+---@field mousepressed fun(self: State, x: number, y: number, button: integer?)?
 
 ---@alias StateList table<string, State>
 
@@ -70,3 +75,8 @@ local listeners = {}
 ---@field dead boolean
 ---@field update fun(self: Entity, dt: number)
 ---@field draw fun(self: Entity)
+
+---@class Task
+---@field update fun(self: Task, dt: number)
+---@field draw fun(self: Task)
+---@field mousepressed fun(self: Task, x: number, y: number, button: integer?)
