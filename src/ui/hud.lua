@@ -130,7 +130,8 @@ end
 
 ---@param world World
 ---@param timeLeft number
-function HUD.drawDay(world, timeLeft)
+---@param busy boolean
+function HUD.drawDay(world, timeLeft, busy)
   love.graphics.push("all")
   love.graphics.setFont(font)
   status(world)
@@ -140,7 +141,7 @@ function HUD.drawDay(world, timeLeft)
   text(title, Screen.width - MARGIN - font:getWidth(title), MARGIN)
   text(info, Screen.width - MARGIN - font:getWidth(info), MARGIN + 12, GREY)
 
-  hint(world)
+  if not busy then hint(world) end
   counter(world)
   timer(timeLeft)
   love.graphics.pop()
