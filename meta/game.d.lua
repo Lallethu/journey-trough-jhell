@@ -9,6 +9,8 @@
 ---| "move_down"
 ---| "interact"
 ---| "attack"
+---| "heal"
+---| "place_wall"
 ---| "end_day"
 ---| "debug_switch_state"
 ---| "debug_profiler"
@@ -17,6 +19,7 @@
 ---@alias GameEvent
 ---| "jelly_died"
 ---| "player_attacked"
+---| "player_healed"
 ---| "jelly_spawned"
 ---| "task_done"
 ---| "task_failed"
