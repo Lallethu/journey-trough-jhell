@@ -8,6 +8,7 @@ local SplittingSystem = require("src.systems.splitting")
 local Interactable    = require("src.world.interactable")
 local Events          = require("src.core.events")
 local HUD             = require("src.ui.hud")
+local FX              = require("src.systems.fx")
 local Profiler        = require("src.core.profiler")
 
 ---@class Game
@@ -20,6 +21,7 @@ local world
 
 function Game.load()
   Screen.init()
+  FX.init()
   HUD.init()
 
   world = World.new()
