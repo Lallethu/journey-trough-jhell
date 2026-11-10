@@ -31,7 +31,7 @@ function Player.new(x, y)
     facingY = 1,
     attackTimer = 0,
     -- hittable
-    hp = playerdata.BASE_HP,
+    hp = playerdata.MAX_HP,
     hitTimer = 0,
     hitDuration = playerdata.HIT_DURATION,
     takeHit = Hittable.takeHit,
