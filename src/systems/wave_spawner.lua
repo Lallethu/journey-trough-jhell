@@ -1,16 +1,19 @@
-local Screen    = require("src.core.screen")
-local Events    = require("src.core.events")
-local Jelly     = require("src.world.jelly")
+local Screen      = require("src.core.screen")
+local Events      = require("src.core.events")
+local Jelly       = require("src.world.jelly")
 
-local wavesdata = require("src.data.waves")
+local wavesdata   = require("src.data.waves")
 
 ---@type World
 local world
-local night     = 1
-local queue     = {}
-local timer     = 0
-local interval  = 1
-local active    = false
+local night       = 1
+local queue       = {}
+local timer       = 0
+local interval    = 1
+local active      = false
+
+---@class WaveSpawner
+local WaveSpawner = {}
 
 ---Flatten the groups into a shuffled list of sizes
 ---
@@ -46,9 +49,6 @@ local function spawnOne()
   local x, y = edgePosition()
   world:add(Jelly.new(world, x, y, table.remove(queue)))
 end
-
----@class WaveSpawner
-local WaveSpawner = {}
 
 function WaveSpawner.start(p_world, currentNightCounter)
   world, night = p_world, currentNightCounter
