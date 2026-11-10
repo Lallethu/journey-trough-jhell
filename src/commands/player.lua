@@ -27,23 +27,21 @@ function Commands.attack(world)
 end
 
 ---@param world World
----@return boolean executed
+---@return Interactable? target
 function Commands.interact(world)
   local player = world.player --[[@as Player]]
-  if not player or player.dead then return false end
+  if not player or player.dead then return nil end
 
   local target = world:nearest(player.x, player.y, playerdata.INTERACT_REACH, "interactable") --[[@as Interactable]]
-  if not target then return false end
+  if not target or target.usedToday then return nil end
 
   local task = tasksdata[target.taskId]
   if task.cost and world.sugar < task.cost then
     Events.emit("task_refused", target.taskId)
-    return false
+    return nil
   end
 
-  if not target:tryUse() then return false end
-  Events.emit("task_done", target.taskId)
-  return true
+  return target
 end
 
 return Commands

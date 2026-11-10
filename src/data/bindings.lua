@@ -1,12 +1,15 @@
 ---@type Bindings
 local bindings = {
-  move_left            = { "a", "q", "left" },
+  move_left            = { "a", "left" },
   move_right           = { "d", "right" },
-  move_up              = { "w", "z", "up" },
+  move_up              = { "w", "up" },
   move_down            = { "s", "down" },
 
   attack               = { "space" },
   interact             = { "e" },
+  -- place_wall           = { "q" }, -- preshot
+  -- heal                 = { "f" }, -- preshot
+  cancel               = { "x" },
   end_day              = { "return" },
 
   -- debug_switch_state   = { "return" },

@@ -74,6 +74,15 @@ function Game.keypressed(k, sc)
   if action then stateMachine:onAction(action) end
 end
 
+---@param x number
+---@param y number
+---@param button integer
+function Game.mousepressed(x, y, button)
+  local gx, gy = Screen.toGameCoordinates(x, y)
+  if gx < 0 or gy < 0 or gx > Screen.width or gy > Screen.height then return end
+  stateMachine:mousepressed(gx, gy, button)
+end
+
 function Game.resize(w, h)
   Screen.resize(w, h)
 end
