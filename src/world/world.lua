@@ -4,6 +4,8 @@
 ---@field player Hittable
 ---@field nextId integer
 ---@field night integer
+---@field sugar number
+---@field stock table
 local World = {}
 World.__index = World
 
@@ -25,6 +27,8 @@ function World.new()
     player = nil,
     nextId = 1,
     night = 1,
+    sugar = 0,
+    stock = {},
   }, World)
 end
 
@@ -48,6 +52,15 @@ end
 function World:sweepDead()
   for i = #self.entities, 1, -1 do
     if self.entities[i].dead then table.remove(self.entities, i) end
+  end
+end
+
+---@param kind EntityKind
+---@param fn fun(e: Entity)
+function World:eachOfKind(kind, fn)
+  for i = 1, #self.entities do
+    local e = self.entities[i]
+    if e.kind == kind and not e.dead then fn(e) end
   end
 end
 
