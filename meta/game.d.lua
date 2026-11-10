@@ -9,6 +9,7 @@
 ---| "move_down"
 ---| "interact"
 ---| "attack"
+---| "end_day"
 ---| "debug_switch_state"
 ---| "debug_profiler"
 ---| "debug_reset_profiler"
@@ -48,6 +49,7 @@ local listeners = {}
 ---@class State
 ---@field machine StateMachine? reference to the statemachine
 ---@field world World? reference to the world
+---@field timeLeft number? Time between transitions
 ---@field enter fun(self: State, ...: any)? Trigger when StateMachine:switch is called
 ---@field exit fun(self: State)? Trigger when StateMachine:switch is called
 ---@field update fun(self: State, dt: number)?
