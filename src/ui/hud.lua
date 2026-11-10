@@ -142,6 +142,7 @@ function HUD.drawDay(world, timeLeft)
 
   hint(world)
   counter(world)
+  timer(timeLeft)
   love.graphics.pop()
 end
 
