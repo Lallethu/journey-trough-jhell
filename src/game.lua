@@ -3,7 +3,10 @@ local Input = require("src.core.input")
 local StateMachine = require("src.core.statemachine")
 local Player = require("src.world.player")
 local World = require("src.world.world")
+local ResourcesSystem = require("src.systems.resources")
 local SplittingSystem = require("src.systems.splitting")
+local Interactable = require("src.world.interactable")
+local Events = require("src.core.events")
 local Profiler = require("src.core.profiler")
 
 ---@class Game
@@ -18,9 +21,14 @@ function Game.load()
   Screen.init()
 
   world = World.new()
-  world.player = world:add(Player.new(50, 50)) --[[@as Hittable]]
-  SplittingSystem.init(world)
+  world.player = world:add(Player.new(Screen.width / 2, Screen.height / 2)) --[[@as Hittable]]
 
+  world:add(Interactable.new("wall", 50, 50))
+  world:add(Interactable.new("healer", 200, 200))
+  world:add(Interactable.new("gatherer", 320, 20))
+
+  ResourcesSystem.init(world)
+  SplittingSystem.init(world)
   stateMachine = StateMachine.new {
     states = {
       day   = require("src.states.day"),
@@ -30,6 +38,11 @@ function Game.load()
   }
 
   stateMachine:switch("day")
+
+  -- TODO: remove that
+  Events.on("task_done", function(id)
+    print(id, "sugar:", world.sugar, "wall:", world.stock.wall)
+  end)
 end
 
 function Game.update(dt)
