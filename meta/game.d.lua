@@ -18,17 +18,25 @@
 ---| "player_attacked"
 ---| "jelly_spawned"
 ---| "task_done"
+---| "task_refused"
 ---| "phase_changed"
 ---| "wave_cleared"
 ---| "structure_built"
+
+---@alias TaskId
+---| "gatherer"
+---| "wall"
+---| "healer"
 
 ---@alias EntityKind
 ---| "player"
 ---| "jelly"
 ---| "wall"
 ---| "npc"
+---| "interactable"
 
 ---@alias Bindings table<Binding, love.Scancode[]>
+---@alias Tasks table<TaskId, table>
 
 ---@alias EventHandler fun(...: any)
 
