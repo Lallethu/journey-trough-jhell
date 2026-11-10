@@ -19,6 +19,7 @@ Theme: **Jelly**.
 | Day | E | Interact |
 | Night | Space | Attack |
 | Night | Q | Place wall |
+| Night | F | Heal |
 
 ## How to play
 
