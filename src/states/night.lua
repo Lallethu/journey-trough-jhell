@@ -1,16 +1,16 @@
----@type Screen
-local Screen      = require("src.core.screen")
----@type Jelly
-local Jelly       = require("src.world.jelly")
----@type Events
-local Events      = require("src.core.events")
 ---@type Commands
 local Commands    = require("src.commands.player")
----@type WaveSpawner
-local WaveSpawner = require("src.systems.wave_spawner")
+---@type Events
+local Events      = require("src.core.events")
 ---@type HUD
 local HUD         = require("src.ui.hud")
+---@type Screen
+local Screen      = require("src.core.screen")
+---@type WaveSpawner
+local WaveSpawner = require("src.systems.wave_spawner")
 local Profiler    = require("src.core.profiler")
+
+local palettes    = require("src.data.palettes")
 
 local keymap      = { attack = Commands.attack }
 
@@ -36,13 +36,12 @@ function NightState:update(dt)
 end
 
 function NightState:draw()
+  Screen.fill(palettes.NIGHT)
   self.world:draw()
   HUD.drawNight(self.world)
 end
 
 function NightState:onAction(action)
-  -- TODO: remove that later
-  if action == "debug_switch_state" then self.machine:switch("day") end
   -- TODO: remove that later
   if action == "debug_profiler" then Profiler.toggle() end
   if action == "debug_reset_profiler" then Profiler.reset() end

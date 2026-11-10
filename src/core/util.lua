@@ -16,4 +16,14 @@ function Util.lerp(a, b, t)
   return a + (b - a) * t
 end
 
+---@param a number[]
+---@param b number[]
+---@param t number
+---@param out number[]
+---@return number[]
+function Util.mixColor(a, b, t, out)
+  for i = 1, 4 do out[i] = Util.lerp(a[i], b[i], t) end
+  return out
+end
+
 return Util

@@ -1,8 +1,12 @@
 local Events = require("src.core.events")
+
 local tasksdata = require("src.data.tasks")
 
 ---@type World
 local world
+
+---@class Resources
+local Resources = {}
 
 ---@param taskId TaskId
 local function onTaskDone(taskId)
@@ -13,9 +17,6 @@ local function onTaskDone(taskId)
     world.stock[task.gives] = (world.stock[task.gives] or 0) + 1
   end
 end
-
----@class Resources
-local Resources = {}
 
 ---@param p_world World
 function Resources.init(p_world)

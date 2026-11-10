@@ -1,9 +1,11 @@
 local Util                        = require("src.core.util")
 local Screen                      = require("src.core.screen")
+
 local bindings                    = require("src.data.bindings")
 local tasksdata                   = require("src.data.tasks")
 local wavesdata                   = require("src.data.waves")
 local playerdata                  = require("src.data.player")
+local daytimings                  = require("src.data.day_timings")
 
 local MARGIN                      = 6
 local SIZE_NAMES                  = { "small", "medium", "big" }
@@ -37,7 +39,6 @@ end
 local function ratioColor(t)
   local from, to, k = RED, YELLOW, t * 2
   if t >= 0.5 then from, to, k = YELLOW, GREEN, t * 2 - 1 end
-  -- TODO: might extract to util
   for i = 1, 3 do scratch[i] = Util.lerp(from[i], to[i], k) end
   return scratch
 end
@@ -111,12 +112,25 @@ local function counter(world)
   local label = "Tasks " .. done .. "/" .. total
 end
 
+local function timer(timeLeft)
+  local w, h = 100, 5
+  local x, ratio = math.floor((Screen.width - w) / 2),
+      Util.clamp(timeLeft / daytimings.DAY_LENGTH, 0, 1)
+  love.graphics.setColor(0, 0, 0, 0.6)
+  love.graphics.rectangle("fill", x, MARGIN, w, h)
+  love.graphics.setColor(ratioColor(ratio))
+  love.graphics.rectangle("fill", x, MARGIN, w * ratio, h)
+  local label = tostring(math.ceil(timeLeft))
+  text(label, centeredX(label), MARGIN + h)
+end
+
 function HUD.init()
   font = love.graphics.newFont(10, "mono")
 end
 
 ---@param world World
-function HUD.drawDay(world)
+---@param timeLeft number
+function HUD.drawDay(world, timeLeft)
   love.graphics.push("all")
   love.graphics.setFont(font)
   status(world)
@@ -128,6 +142,7 @@ function HUD.drawDay(world)
 
   hint(world)
   counter(world)
+  timer(timeLeft)
   love.graphics.pop()
 end
 

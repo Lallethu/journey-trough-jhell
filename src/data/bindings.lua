@@ -7,7 +7,9 @@ local bindings = {
 
   attack               = { "space" },
   interact             = { "e" },
-  debug_switch_state   = { "return" },
+  end_day              = { "return" },
+
+  -- debug_switch_state   = { "return" },
   debug_profiler       = { "f3" },
   debug_reset_profiler = { "f5" },
 }
