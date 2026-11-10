@@ -4,13 +4,13 @@ local Screen = require("src.core.screen")
 local Jelly = require("src.world.jelly")
 ---@type Events
 local Events = require("src.core.events")
----@type PlayerCommands
-local PlayerCommands = require("src.commands.player")
+---@type Commands
+local Commands = require("src.commands.player")
 ---@type WaveSpawner
 local WaveSpawner = require("src.systems.wave_spawner")
 local Profiler = require("src.core.profiler")
 
-local keymap = { attack = PlayerCommands.attack }
+local keymap = { attack = Commands.attack }
 
 ---@type State
 local NightState = {}
