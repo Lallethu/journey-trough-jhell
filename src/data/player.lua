@@ -1,7 +1,7 @@
 local playerdata = {
   SIZE            = 16,
   HALF            = 0,
-  BASE_HP         = 100,
+  MAX_HP          = 100,
   MAX_SPEED       = 130,
   ACCELERATION    = 12,
   FRICTION        = 10,
