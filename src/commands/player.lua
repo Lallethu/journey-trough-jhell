@@ -44,4 +44,21 @@ function Commands.interact(world)
   return target
 end
 
+---@param world World
+function Commands.heal(world)
+  local player = world.player --[[@as Player]]
+  if not player or player.dead then return false end
+  if world.stock and world.stock.heal < 1 then return false end
+
+  local healed = math.min(playerdata.BASE_HEAL_AMOUNT, playerdata.MAX_HP - player.hp)
+  if healed <= 0 then return false end -- TODO: add fx full life toast text
+
+  player.hp = player.hp + healed
+  world.stock.heal = world.stock.heal - 1
+  Events.emit("player_healed", healed, player.x, player.y)
+  return true
+end
+
+function Commands.placeWall(world) end -- stub
+
 return Commands
