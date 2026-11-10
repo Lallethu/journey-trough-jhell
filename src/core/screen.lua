@@ -41,6 +41,14 @@ function Screen.finish()
   love.graphics.draw(canvas, offsetX, offsetY, 0, scale, scale)
 end
 
+---Sets a colored rectangle begin everything to act like a colorBackground
+---@param color number[]
+function Screen.fill(color)
+  love.graphics.setColor(color)
+  love.graphics.rectangle("fill", 0, 0, Screen.width, Screen.height)
+  love.graphics.setColor(1, 1, 1, 1)
+end
+
 ---Compute physical to virtual position
 ---@param x number
 ---@param y number
