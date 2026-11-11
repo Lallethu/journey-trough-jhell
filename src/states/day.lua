@@ -1,3 +1,5 @@
+---@type Collision
+local Collision    = require("src.systems.collision")
 ---@type ClickTargets
 local ClickTargets = require("src.tasks.click_targets")
 ---@type Commands
@@ -51,6 +53,7 @@ function DayState:update(dt)
     self.activeTask:update(dt)
   else
     self.world:update(dt)
+    Collision.resolve(dt, self.world)
   end
   self.timeLeft = self.timeLeft - dt
   if self.timeLeft <= 0 then self.machine:switch("dusk") end
