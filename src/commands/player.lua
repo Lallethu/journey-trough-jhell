@@ -1,4 +1,7 @@
 local Events = require("src.core.events")
+local Screen = require("src.core.screen")
+local Structure = require("src.world.structure")
+local Util = require("src.core.util")
 
 local playerdata = require("src.data.player")
 local tasksdata = require("src.data.tasks")
@@ -48,7 +51,7 @@ end
 function Commands.heal(world)
   local player = world.player --[[@as Player]]
   if not player or player.dead then return false end
-  if world.stock and world.stock.heal < 1 then return false end
+  if world.stock.heal < 1 then return false end
 
   local healed = math.min(playerdata.BASE_HEAL_AMOUNT, playerdata.MAX_HP - player.hp)
   if healed <= 0 then return false end -- TODO: add fx full life toast text
@@ -59,6 +62,34 @@ function Commands.heal(world)
   return true
 end
 
-function Commands.placeWall(world) end -- stub
+---@param world World
+---@return boolean success Whether or not the wall have been placed
+function Commands.placeWall(world)
+  local player = world.player --[[@as Player]]
+  if not player or player.dead then return false end
+  if world.stock.wall < 1 then return false end
+
+  local vertical = math.abs(player.facingX) > math.abs(player.facingY)
+  local wall = Structure.new("wall",
+    player.x + player.facingX * playerdata.PLACE_DISTANCE,
+    player.y + player.facingY * playerdata.PLACE_DISTANCE,
+    vertical)
+
+  wall.x = Util.clamp(wall.x, wall.hw, Screen.width - wall.hw)
+  wall.y = Util.clamp(wall.y, wall.hh, Screen.height - wall.hh)
+
+  -- avoid the self blocking edge case
+  -- might trigger an event from here
+  if math.abs(wall.x - player.x) < wall.hw + playerdata.HALF
+      and math.abs(wall.y - player.y) < wall.hh + playerdata.HALF then
+    return false
+  end
+
+  world:add(wall)
+  world.stock.wall = world.stock.wall - 1
+  Events.emit("structure_built", wall.x, wall.y)
+
+  return true
+end
 
 return Commands
