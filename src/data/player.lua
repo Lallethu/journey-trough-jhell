@@ -14,6 +14,7 @@ local playerdata = {
   ATTACK_DAMAGE    = 1.78,
   ATTACK_REACH     = 12,
   INTERACT_REACH   = 24,
+  PLACE_DISTANCE   = 22,
 }
 
 playerdata.HALF = playerdata.SIZE / 2
