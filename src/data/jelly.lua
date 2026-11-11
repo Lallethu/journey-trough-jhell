@@ -11,10 +11,11 @@ local jellydata = {
     [2] = 1.25,
     [3] = 1.65,
   },
+  CHEW_FACTOR         = 0.4,
   SPLIT_PER_SIZE      = {
     [1] = { dead = true },
     [2] = { size = 1, split = 2 },
-    [3] = { size = 2, split = 2 }
+    [3] = { size = 2, split = 2 },
   }
 }
 
