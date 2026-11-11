@@ -28,18 +28,22 @@
 ---| "phase_changed"
 ---| "wave_cleared"
 ---| "structure_built"
+---| "structure_destroyed"
 
 ---@alias TaskId
 ---| "gatherer"
 ---| "wall"
 ---| "healer"
 
+---@alias StructureId
+---| "wall"
+
 ---@alias EntityKind
 ---| "player"
 ---| "jelly"
 ---| "wall"
----| "npc"
 ---| "interactable"
+---| "structure"
 
 ---@alias Bindings table<Binding, love.Scancode[]>
 ---@alias Tasks table<TaskId, table>
