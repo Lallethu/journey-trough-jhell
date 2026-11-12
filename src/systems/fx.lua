@@ -23,7 +23,7 @@ function FX.float(text, x, y, color)
 end
 
 function FX.init()
-  font = love.graphics.newFont(10, "mono")
+  font = font or love.graphics.newFont(10, "mono")
   floats = {}
   Events.off_owner(FX)
   Events.on("player_healed", function(amount, x, y)
