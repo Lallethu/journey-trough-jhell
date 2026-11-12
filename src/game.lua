@@ -17,37 +17,36 @@ local Game            = {}
 ---@type StateMachine
 local stateMachine
 ---@type World
-local world
 
-function Game.load()
-  Screen.init()
-  FX.init()
-  HUD.init()
-
-  world = World.new()
+local function newRun()
+  local world = World.new()
   world.player = world:add(Player.new(Screen.width / 2, Screen.height / 2)) --[[@as Hittable]]
 
   world:add(Interactable.new("wall", 50, 50))
   world:add(Interactable.new("healer", 200, 200))
   world:add(Interactable.new("gatherer", 320, 20))
 
-  ResourcesSystem.init(world)
   SplittingSystem.init(world)
+  ResourcesSystem.init(world)
+  FX.init()
+
   stateMachine = StateMachine.new {
+    world = world,
     states = {
-      day   = require("src.states.day"),
-      dusk  = require("src.states.dusk"),
-      night = require("src.states.night")
+      day    = require("src.states.day"),
+      dusk   = require("src.states.dusk"),
+      night  = require("src.states.night"),
+      ending = require("src.states.ending"),
     },
-    world = world
   }
-
   stateMachine:switch("day")
+end
 
-  -- TODO: remove that
-  Events.on("task_done", function(id)
-    print(id, "sugar:", world.sugar, "wall:", world.stock.wall)
-  end)
+function Game.load()
+  Screen.init()
+  HUD.init()
+  Events.on("restart_requested", newRun, Game)
+  newRun()
 end
 
 function Game.update(dt)

@@ -15,6 +15,7 @@ local WaveSpawner = require("src.systems.wave_spawner")
 local Profiler    = require("src.core.profiler")
 
 local palettes    = require("src.data.palettes")
+local wavesdata   = require("src.data.waves")
 
 local keymap      = {
   attack = Commands.attack,
@@ -28,8 +29,12 @@ local NightState  = {}
 function NightState:enter()
   WaveSpawner.start(self.world, self.world.night)
   Events.on("wave_cleared", function()
-    self.world.night = self.world.night + 1
-    self.machine:switch("day")
+    if self.world.night >= #wavesdata.NIGHTS then
+      self.machine:switch("ending", true)
+    else
+      self.world.night = self.world.night + 1
+      self.machine:switch("day")
+    end
   end, self)
 end
 
@@ -42,6 +47,12 @@ function NightState:update(dt)
   self.world:update(dt)
   Collision.resolve(dt, self.world)
   FX.update(dt)
+
+  if self.world.player.dead then
+    self.machine:switch("ending", false)
+    return
+  end
+
   WaveSpawner.update(dt)
 end
 

@@ -27,6 +27,7 @@
 ---| "task_target_hit"
 ---| "phase_changed"
 ---| "wave_cleared"
+---| "restart_requested"
 ---| "structure_built"
 ---| "structure_destroyed"
 
@@ -60,6 +61,7 @@ local listeners = {}
 ---@field world World? reference to the world
 ---@field activeTask Task?
 ---@field timeLeft number? Time between transitions
+---@field won boolean? Flag for win/lose
 ---@field enter fun(self: State, ...: any)? Trigger when StateMachine:switch is called
 ---@field exit fun(self: State)? Trigger when StateMachine:switch is called
 ---@field update fun(self: State, dt: number)?
