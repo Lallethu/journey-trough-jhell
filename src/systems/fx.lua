@@ -1,17 +1,17 @@
-local Events = require("src.core.events")
-local Util = require("src.core.util")
+local Events  = require("src.core.events")
+local Util    = require("src.core.util")
 
-local LIFE = 0.9 -- seconds
-local RISE = 18  -- px travelled over the lifetime
-local GREEN = { 0.4, 1, 0.5, 1 }
-local WHITE = { 1, 1, 1, 1 }
+local LIFE    = 0.9
+local RISE    = 18
+local GREEN   = { 0.4, 1, 0.5, 1 }
+local WHITE   = { 1, 1, 1, 1 }
 
 local font
-local floats = {}
+local floats  = {}
 local scratch = { 1, 1, 1, 1 }
 
 ---@class FX
-local FX = {}
+local FX      = {}
 
 ---Create a floating effect
 ---@param text string

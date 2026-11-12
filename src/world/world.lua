@@ -28,7 +28,7 @@ function World.new()
     nextId = 1,
     night = 1,
     sugar = 0,
-    stock = {},
+    stock = { heal = 0, wall = 0 },
   }, World)
 end
 

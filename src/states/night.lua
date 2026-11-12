@@ -1,3 +1,5 @@
+---@type Collision
+local Collision   = require("src.systems.collision")
 ---@type Commands
 local Commands    = require("src.commands.player")
 ---@type Events
@@ -14,7 +16,11 @@ local Profiler    = require("src.core.profiler")
 
 local palettes    = require("src.data.palettes")
 
-local keymap      = { attack = Commands.attack, heal = Commands.heal }
+local keymap      = {
+  attack = Commands.attack,
+  heal = Commands.heal,
+  place_wall = Commands.placeWall
+}
 
 ---@type State
 local NightState  = {}
@@ -34,6 +40,7 @@ end
 
 function NightState:update(dt)
   self.world:update(dt)
+  Collision.resolve(dt, self.world)
   FX.update(dt)
   WaveSpawner.update(dt)
 end
