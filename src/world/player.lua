@@ -1,9 +1,11 @@
+local Animator = require("src.core.animator")
 local Input = require("src.core.input")
 local Screen = require("src.core.screen")
 local Util = require("src.core.util")
 local Hittable = require("src.core.hittable")
 
 local playerdata = require("src.data.player")
+local sheet = Animator.newSheet(require("src.data.player_anim"))
 
 ---@class Player : Hittable
 ---@field vx number
@@ -11,6 +13,8 @@ local playerdata = require("src.data.player")
 ---@field facingX number
 ---@field facingY number
 ---@field attackTimer number
+---@field anim Animator
+---@field flip boolean
 local Player = {}
 Player.__index = Player
 
@@ -18,7 +22,7 @@ Player.__index = Player
 ---@param y number Centre
 ---@return Player
 function Player.new(x, y)
-  return setmetatable({
+  local instance = {
     -- entity
     x = x,
     y = y,
@@ -30,20 +34,30 @@ function Player.new(x, y)
     facingX = 0,
     facingY = 1,
     attackTimer = 0,
+    anim = Animator.new(sheet),
+    flip = false,
     -- hittable
     hp = playerdata.MAX_HP,
     hitTimer = 0,
     hitDuration = playerdata.HIT_DURATION,
     takeHit = Hittable.takeHit,
-  }, Player)
+  }
+
+  instance.anim:play("idle")
+  return setmetatable(instance, Player)
 end
 
 ---@param dt number
 function Player:update(dt)
   local ax, ay = Input.axis()
+  if ax ~= 0 then self.flip = ax < 0 end
   if ax ~= 0 or ay ~= 0 then
     self.facingX, self.facingY = ax, ay
   end
+
+  if self.anim.done then self.anim:play("idle") end
+  self.anim:update(dt)
+
   Hittable.tick(self, dt)
   self.attackTimer = math.max(0, self.attackTimer - dt)
 
@@ -60,15 +74,10 @@ function Player:draw()
   love.graphics.setColor((Hittable.isBlinkedOff(self) and { 0.55, 0.55, 0.60, 0.82 })
     or playerdata.COLOR)
 
-  love.graphics.rectangle(
-    "fill",
-    self.x - playerdata.HALF,
-    self.y - playerdata.HALF,
-    playerdata.SIZE,
-    playerdata.SIZE
-  )
+  self.anim:draw(self.x, self.y, self.flip)
 
   if self.attackTimer > 0 then
+    love.graphics.setColor(1, 1, 1, 0.6)
     love.graphics.circle("line", self.x + self.facingX * playerdata.ATTACK_REACH,
       self.y + self.facingY * playerdata.ATTACK_REACH, playerdata.ATTACK_RADIUS)
   end
