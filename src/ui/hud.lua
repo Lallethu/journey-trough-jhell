@@ -110,6 +110,8 @@ local function counter(world)
   world:eachOfKind("interactable", tally)
 
   local label = "Tasks " .. done .. "/" .. total
+  text(label, centeredX(label), Screen.height - 20,
+    ratioColor(total > 0 and done / total or 0))
 end
 
 local function timer(timeLeft)
@@ -136,7 +138,7 @@ function HUD.drawDay(world, timeLeft, busy)
   love.graphics.setFont(font)
   status(world)
 
-  local title = "Night " .. world.night .. " incoming"
+  local title = "Night " .. world.night .. "/" .. #wavesdata.NIGHTS
   local info = forecast(world.night)
   text(title, Screen.width - MARGIN - font:getWidth(title), MARGIN)
   text(info, Screen.width - MARGIN - font:getWidth(info), MARGIN + 12, GREY)
