@@ -16,6 +16,7 @@ function Commands.attack(world)
   if not player or player.dead or player.attackTimer > 0 then return false end
 
   player.attackTimer = playerdata.ATTACK_COOLDOWN
+  player.anim:play("swing", true)
 
   local cx = player.x + player.facingX * playerdata.ATTACK_REACH
   local cy = player.y + player.facingY * playerdata.ATTACK_REACH
