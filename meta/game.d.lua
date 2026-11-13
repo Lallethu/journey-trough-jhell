@@ -21,6 +21,7 @@
 ---| "player_attacked"
 ---| "player_healed"
 ---| "jelly_spawned"
+---| "sugar_changed"
 ---| "task_done"
 ---| "task_failed"
 ---| "task_refused"
@@ -89,3 +90,10 @@ local listeners = {}
 ---@field update fun(self: Task, dt: number)
 ---@field draw fun(self: Task)
 ---@field mousepressed fun(self: Task, x: number, y: number, button: integer?)
+
+---@class Swing
+---@field t number
+---@field fx number
+---@field fy number
+---@field hit table<Entity, boolean>
+---@field impact boolean
