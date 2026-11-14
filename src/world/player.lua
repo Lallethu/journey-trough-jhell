@@ -15,9 +15,9 @@ local sheet = Animator.newSheet(require("src.data.player_anim"))
 ---@field attackTimer number
 ---@field anim Animator
 ---@field flip boolean
+---@field attackBuffer number
 local Player = {}
 Player.__index = Player
-
 ---@param x number Centre
 ---@param y number Centre
 ---@return Player
@@ -36,6 +36,7 @@ function Player.new(x, y)
     attackTimer = 0,
     anim = Animator.new(sheet),
     flip = false,
+    attackBuffer = 0,
     -- hittable
     hp = playerdata.MAX_HP,
     hitTimer = 0,
@@ -43,7 +44,7 @@ function Player.new(x, y)
     takeHit = Hittable.takeHit,
   }
 
-  instance.anim:play("idle")
+  instance.anim:play("idle", true)
   return setmetatable(instance, Player)
 end
 
@@ -60,6 +61,7 @@ function Player:update(dt)
 
   Hittable.tick(self, dt)
   self.attackTimer = math.max(0, self.attackTimer - dt)
+  self.attackBuffer = math.max(0, self.attackBuffer - dt)
 
   local rate = (ax ~= 0 or ay ~= 0) and playerdata.ACCELERATION or playerdata.FRICTION
   local weight = math.min(1, rate * dt)
@@ -67,7 +69,7 @@ function Player:update(dt)
   self.vy = Util.lerp(self.vy, ay * playerdata.MAX_SPEED, weight)
 
   self.x = Util.clamp(self.x + self.vx * dt, playerdata.HALF, Screen.width - playerdata.HALF)
-  self.y = Util.clamp(self.y + self.vy * dt, playerdata.HALF, Screen.height - playerdata.HALF)
+  self.y = Util.clamp(self.y + self.vy * dt, playerdata.HALF + 91, Screen.height - playerdata.HALF)
 end
 
 function Player:draw()
@@ -76,11 +78,11 @@ function Player:draw()
 
   self.anim:draw(self.x, self.y, self.flip)
 
-  if self.attackTimer > 0 then
-    love.graphics.setColor(1, 1, 1, 0.6)
-    love.graphics.circle("line", self.x + self.facingX * playerdata.ATTACK_REACH,
-      self.y + self.facingY * playerdata.ATTACK_REACH, playerdata.ATTACK_RADIUS)
-  end
+  -- if self.attackTimer > 0 then
+  --   love.graphics.setColor(1, 1, 1, 0.6)
+  --   love.graphics.circle("line", self.x + self.facingX * playerdata.ATTACK_REACH,
+  --     self.y + self.facingY * playerdata.ATTACK_REACH, playerdata.ATTACK_RADIUS)
+  -- end
 
   love.graphics.setColor(1, 1, 1, 1)
 end
