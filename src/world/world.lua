@@ -49,6 +49,55 @@ function World:flushPending()
   end
 end
 
+function World:resolveJellyCollisions()
+  local jellies = {}
+
+  for i = 1, #self.entities do
+    local e = self.entities[i]
+
+    if e.kind == "jelly" and not e.dead then
+      jellies[#jellies + 1] = e
+    end
+  end
+
+  for _ = 1, 2 do
+    for i = 1, #jellies - 1 do
+      local a = jellies[i]
+
+      for j = i + 1, #jellies do
+        local b = jellies[j]
+
+        local dx = b.x - a.x
+        local dy = b.y - a.y
+
+        local minDistance = a.radius + b.radius
+        local distance2 = dx * dx + dy * dy
+
+        if distance2 < minDistance * minDistance then
+          local distance
+
+          if distance2 == 0 then
+            dx, dy = 1, 0
+            distance = 0
+          else
+            distance = math.sqrt(distance2)
+            dx, dy = dx / distance, dy / distance
+          end
+
+          local overlap = minDistance - distance
+          local displacement = overlap * 0.5
+
+          a.x = a.x - dx * displacement
+          a.y = a.y - dy * displacement
+
+          b.x = b.x + dx * displacement
+          b.y = b.y + dy * displacement
+        end
+      end
+    end
+  end
+end
+
 function World:sweepDead()
   for i = #self.entities, 1, -1 do
     if self.entities[i].dead then table.remove(self.entities, i) end
@@ -122,10 +171,16 @@ function World:update(dt)
   end
   self:flushPending()
   self:sweepDead()
+
+  self:resolveJellyCollisions()
   table.sort(self.entities, byDepth)
 end
 
-function World:draw()
+function World:draw(background)
+  if background then
+    love.graphics.draw(background)
+  end
+
   for i = 1, #self.entities do
     self.entities[i]:draw()
   end
