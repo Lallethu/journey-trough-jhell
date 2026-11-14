@@ -1,5 +1,5 @@
 local wavesdata = {
-  EDGE_MARGIN = 20, -- care if jelly.size changes, this one should as well
+  EDGE_MARGIN = 30, -- care if jelly.size changes, this one should as well
   NIGHTS = {
     { interval = 0.8, groups = { { size = 1, count = 6 } } },
     { interval = 0.7, groups = { { size = 1, count = 8 }, { size = 2, count = 2 } } },
