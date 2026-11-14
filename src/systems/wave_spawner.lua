@@ -38,11 +38,13 @@ local function edgePosition()
   local margin = wavesdata.EDGE_MARGIN
   local side = love.math.random(4)
 
-  if side == 1 then return love.math.random(0, Screen.width), -margin end
-  if side == 2 then return Screen.width + margin, love.math.random(0, Screen.height) end
+  -- if side == 1 then return love.math.random(0, Screen.width), -margin end
+  if side == 1 then return -margin, love.math.random(100, Screen.height) end
+  -- if side == 2 then return Screen.width + margin, love.math.random(0, Screen.height) end
+  if side == 2 then return love.math.random(0, Screen.width), Screen.height + margin end
   if side == 3 then return love.math.random(0, Screen.width), Screen.height + margin end
 
-  return -margin, love.math.random(0, Screen.height)
+  return -margin, love.math.random(100, Screen.height)
 end
 
 local function spawnOne()

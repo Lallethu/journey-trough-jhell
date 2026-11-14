@@ -15,18 +15,33 @@ function Commands.attack(world)
   local player = world.player --[[@as Player]]
   if not player or player.dead or player.attackTimer > 0 then return false end
 
+  if player.attackTimer > 0 then
+    player.attackBuffer = playerdata.ATTACK_BUFFER
+    return false
+  end
+
+  player.attackBuffer = 0
   player.attackTimer = playerdata.ATTACK_COOLDOWN
+  player.anim:play("swing", true)
 
   local cx = player.x + player.facingX * playerdata.ATTACK_REACH
   local cy = player.y + player.facingY * playerdata.ATTACK_REACH
 
   local targets = world:queryCircle(cx, cy, playerdata.ATTACK_RADIUS, "jelly") --[[@as Jelly]]
   for i = 1, #targets do
-    targets[i]:takeHit(playerdata.ATTACK_DAMAGE)
+    targets[i]:takeHit(playerdata.ATTACK_DAMAGE, player.x, player.y)
   end
 
   Events.emit("player_attacked", cx, cy, playerdata.ATTACK_RADIUS)
   return true
+end
+
+---@param world World
+function Commands.replayBuffered(world)
+  local player = world.player --[[@as Player]]
+  if player and player.attackBuffer > 0 and player.attackTimer == 0 then
+    Commands.attack(world)
+  end
 end
 
 ---@param world World

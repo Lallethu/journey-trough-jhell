@@ -6,6 +6,8 @@ local ClickTargets = require("src.tasks.click_targets")
 local Commands     = require("src.commands.player")
 ---@type Events
 local Events       = require("src.core.events")
+---@type FX
+local FX           = require("src.systems.fx")
 ---@type HUD
 local HUD          = require("src.ui.hud")
 ---@type Screen
@@ -18,9 +20,11 @@ local palettes     = require("src.data.palettes")
 local tasks        = require("src.data.tasks")
 
 local sky          = { 1, 1, 1, 1 }
+local background   = love.graphics.newImage("assets/gfx/journey-trough-jhell-day-map.png")
+background:setFilter("nearest", "nearest")
 
 ---@type State
-local DayState     = {}
+local DayState = {}
 
 function DayState:enter()
   self.activeTask = nil
@@ -54,6 +58,7 @@ function DayState:update(dt)
   else
     self.world:update(dt)
     Collision.resolve(dt, self.world)
+    FX.update(dt)
   end
   self.timeLeft = self.timeLeft - dt
   if self.timeLeft <= 0 then self.machine:switch("dusk") end
@@ -62,8 +67,9 @@ end
 function DayState:draw()
   local k = Util.clamp(1 - self.timeLeft / daytimings.WARNING_TIME, 0, 1)
   Screen.fill(Util.mixColor(palettes.DAY, palettes.DUSK, k, sky))
-  self.world:draw()
+  self.world:draw(background)
   if self.activeTask then self.activeTask:draw() end
+  FX.draw()
   HUD.drawDay(self.world, self.timeLeft, self.activeTask ~= nil)
 end
 

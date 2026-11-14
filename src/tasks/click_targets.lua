@@ -3,7 +3,7 @@ local Screen = require("src.core.screen")
 
 -- all this might go in a data struct later
 local FADE = 0.2
-local AREA = { x = 40, top = 50, bottom = 60 }
+local AREA = { x = 170, top = 67, bottom = 85 }
 local DIM = { 0, 0, 0, 0.5 }
 local LIVE = { 1.0, 0.85, 0.3 }
 local HIT = { 0.4, 1.0, 0.5 }

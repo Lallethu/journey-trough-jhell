@@ -22,9 +22,9 @@ local function newRun()
   local world = World.new()
   world.player = world:add(Player.new(Screen.width / 2, Screen.height / 2)) --[[@as Hittable]]
 
-  world:add(Interactable.new("wall", 50, 50))
-  world:add(Interactable.new("healer", 200, 200))
-  world:add(Interactable.new("gatherer", 320, 20))
+  world:add(Interactable.new("wall", 72, 200))
+  world:add(Interactable.new("healer", 408, 220))
+  world:add(Interactable.new("gatherer", 240, 128))
 
   SplittingSystem.init(world)
   ResourcesSystem.init(world)

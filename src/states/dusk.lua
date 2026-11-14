@@ -6,9 +6,11 @@ local Screen     = require("src.core.screen")
 
 local daytimings = require("src.data.day_timings")
 local palettes   = require("src.data.palettes")
+local background = love.graphics.newImage("assets/gfx/journey-trough-jhell-dusk-map.png")
+background:setFilter("nearest", "nearest")
 
 ---@type State
-local DuskState  = {}
+local DuskState = {}
 
 function DuskState:enter()
   -- the usage of the term timeLeft
@@ -34,7 +36,7 @@ function DuskState:draw()
 
   Screen.fill(percentage < 0.5 and palettes.DUSK or palettes.NIGHT)
 
-  self.world:draw()
+  self.world:draw(background)
   love.graphics.pop()
 end
 

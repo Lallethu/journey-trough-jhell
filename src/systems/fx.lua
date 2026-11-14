@@ -4,6 +4,7 @@ local Util    = require("src.core.util")
 local LIFE    = 0.9
 local RISE    = 18
 local GREEN   = { 0.4, 1, 0.5, 1 }
+local RED     = { 1, 0.2, 0.25, 1 }
 local WHITE   = { 1, 1, 1, 1 }
 
 local font
@@ -29,6 +30,12 @@ function FX.init()
   Events.on("player_healed", function(amount, x, y)
     FX.float("+" .. amount, x, y, GREEN)
   end, FX)
+  Events.on("sugar_changed", function(amount, additive)
+    FX.float((additive and "+" or "-") .. amount, 50, 50, additive and GREEN or RED)
+  end)
+  Events.on("entity_hurt", function(what, howMuch)
+    FX.float("-" .. howMuch, what.x, what.y - 10, RED)
+  end)
 end
 
 ---@param dt number
