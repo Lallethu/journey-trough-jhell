@@ -30,6 +30,7 @@
 ---| "wave_cleared"
 ---| "restart_requested"
 ---| "structure_built"
+---| "entity_hurt"
 ---| "structure_destroyed"
 
 ---@alias TaskId
