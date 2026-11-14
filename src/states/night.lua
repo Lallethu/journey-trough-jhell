@@ -16,15 +16,17 @@ local Profiler    = require("src.core.profiler")
 
 local palettes    = require("src.data.palettes")
 local wavesdata   = require("src.data.waves")
+local background  = love.graphics.newImage("assets/gfx/journey-trough-jhell-night-map.png")
+background:setFilter("nearest", "nearest")
 
-local keymap      = {
+local keymap     = {
   attack = Commands.attack,
   heal = Commands.heal,
   place_wall = Commands.placeWall
 }
 
 ---@type State
-local NightState  = {}
+local NightState = {}
 
 function NightState:enter()
   WaveSpawner.start(self.world, self.world.night)
@@ -45,6 +47,7 @@ end
 
 function NightState:update(dt)
   self.world:update(dt)
+  Commands.replayBuffered(self.world)
   Collision.resolve(dt, self.world)
   FX.update(dt)
 
@@ -58,7 +61,7 @@ end
 
 function NightState:draw()
   Screen.fill(palettes.NIGHT)
-  self.world:draw()
+  self.world:draw(background)
   FX.draw()
   HUD.drawNight(self.world)
 end

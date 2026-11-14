@@ -20,9 +20,11 @@ local palettes     = require("src.data.palettes")
 local tasks        = require("src.data.tasks")
 
 local sky          = { 1, 1, 1, 1 }
+local background   = love.graphics.newImage("assets/gfx/journey-trough-jhell-day-map.png")
+background:setFilter("nearest", "nearest")
 
 ---@type State
-local DayState     = {}
+local DayState = {}
 
 function DayState:enter()
   self.activeTask = nil
@@ -65,7 +67,7 @@ end
 function DayState:draw()
   local k = Util.clamp(1 - self.timeLeft / daytimings.WARNING_TIME, 0, 1)
   Screen.fill(Util.mixColor(palettes.DAY, palettes.DUSK, k, sky))
-  self.world:draw()
+  self.world:draw(background)
   if self.activeTask then self.activeTask:draw() end
   FX.draw()
   HUD.drawDay(self.world, self.timeLeft, self.activeTask ~= nil)
